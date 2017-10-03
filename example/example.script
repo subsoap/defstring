@@ -1,8 +1,37 @@
 local defstring = require("defstring.defstring")
 
+--[[
+
+This does not (currently at least) wrap any built in Lua string functions
+http://www.lua.org/manual/5.1/manual.html#5.4
+
+--]]
+
 function init(self)
+	test_string_1 = "The quick brown fox jumps over the lazy dog"
+	test_string_2 = [[
+	O that this too too solid flesh would melt,
+	Thaw, and resolve itself into a dew!
+	Or that the Everlasting had not fix'd 
+	His canon 'gainst self-slaughter! O God! God!
+	How weary, stale, flat, and unprofitable
+	Seem to me all the uses of this world!
+		]] -- do not worry if the above does not style properly in editor
+	test_string_3 = "       Text with  whitespace       before  and after.      "
+	test_string_4 = "doki dOKi kokoro"
 
-
+	pprint(test_string_1)
+	pprint(test_string_2)
+	pprint("[" .. test_string_3 .. "]")
+	
+	pprint("[" .. defstring.trim(test_string_3) .. "]")
+	pprint("[" .. defstring.trim_left(test_string_3) .. "]")
+	pprint("[" .. defstring.trim_right(test_string_3) .. "]")
+	pprint("[" .. defstring.trim_extraspace(test_string_3) .. "]")
+	
+	pprint(defstring.capitalize(test_string_4))
+	pprint(defstring.split(test_string_1," "))
+	pprint(defstring.join(defstring.split(test_string_1," "), " "))
 	
 end
 
