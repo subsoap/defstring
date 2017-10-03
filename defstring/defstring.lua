@@ -19,7 +19,7 @@ end
 
 -- Replaces extra spaces (2 or more) with single spaces
 function M.trim_extraspace(s)
-	return s:gsub("%s+", " ") 
+	return s:gsub('%s+', ' ') 
 end
 
 -- Capitalizes the first character of a string
@@ -29,16 +29,16 @@ end
 
 -- Capitalizes each word in a string
 function M.capitalize_every_word(s)
-	return (s:gsub("(%w[%w]*)", function (match) return M.capitalize(match) end))	
+	return (s:gsub('(%w[%w]*)', function (match) return M.capitalize(match) end))	
 end
 
 -- Splits a string into a table based on a delimiter
--- split("a,b,c", ",") returns {"a", "b", "c"}
+-- split('a,b,c', ',') returns {'a', 'b', 'c'}
 function M.split(s,delimiter)
-	delimiter = delimiter or "%s"
+	delimiter = delimiter or '%s'
 	local t={}
 	local i=1
-	for str in string.gmatch(s, "([^"..delimiter.."]+)") do
+	for str in string.gmatch(s, '([^'..delimiter..']+)') do
 		t[i] = str
 		i = i + 1
 	end
@@ -47,7 +47,7 @@ end
 
 -- Joins a table into a single string seperated by a delimiter
 function M.join(t,delimiter)
-	delimiter = delimiter or " "
+	delimiter = delimiter or ' '
 	return table.concat(t, delimiter)	
 end
 
@@ -65,7 +65,7 @@ end
 -- Returns the number of times a target string is within another string
 function M.count(s, target)
 	target = M.escape(target)
-	local _, count = string.gsub(s, target, "")
+	local _, count = string.gsub(s, target, '')
 	return count
 end
 
@@ -91,7 +91,7 @@ end
 
 -- Returns an iterator which will give one character of a string out at a time when called
 function M.iterator(s)
-	return s:gmatch(".")
+	return s:gmatch('.')
 end
 
 -- Returns length of a string, here for completeness but you should probably use # directly instead
@@ -101,7 +101,7 @@ end
 
 -- Returns if a string is empty or not
 function M.is_empty(s)
-	return s == ""
+	return s == ''
 end
 
 -- Returns if a string begins with another target string
@@ -159,7 +159,7 @@ end
 function M.comma(s)
 	s = tostring(s)
 	while true do
-		s, k = string.gsub(s, "^(-?%d+)(%d%d%d)", '%1,%2')
+		s, k = string.gsub(s, '^(-?%d+)(%d%d%d)', '%1,%2')
 		if (k == 0) then
 			break
 		end
@@ -169,23 +169,23 @@ end
 
 -- List of javascript escape replacements
 local javascript_escape_replacements = {
-	["\\"] = "\\\\",
-	["\0"] = "\\x00",
-	["\b"] = "\\b",
-	["\t"] = "\\t",
-	["\n"] = "\\n",
-	["\v"] = "\\v",
-	["\f"] = "\\f",
-	["\r"] = "\\r",
-	["\""] = "\\\"",
-	["\'"] = "\\\'"
+	['\\'] = '\\\\',
+	['\0'] = '\\x00',
+	['\b'] = '\\b',
+	['\t'] = '\\t',
+	['\n'] = '\\n',
+	['\v'] = '\\v',
+	['\f'] = '\\f',
+	['\r'] = '\\r',
+	['\''] = '\\\'',
+	['\''] = '\\\''
 }
 
 -- Makes a string safe for use with Javascript
 function M.make_javascript_safe(s)
-	s = s:gsub(".", javascript_escape_replacements)
-	s = s:gsub( "\226\128\168", "\\\226\128\168" ) -- U+2028
-	s = s:gsub( "\226\128\169", "\\\226\128\169" ) -- U+2029
+	s = s:gsub('.', javascript_escape_replacements)
+	s = s:gsub( '\226\128\168', '\\\226\128\168' ) -- U+2028
+	s = s:gsub( '\226\128\169', '\\\226\128\169' ) -- U+2029
 	return s
 end
 
@@ -213,22 +213,22 @@ end
 
 -- Returns first word of a string
 function M.get_first_word(s)
-	return s:gmatch("%w+")()
+	return s:gmatch('%w+')()
 end
 
 -- Returns last word of a string
 function M.get_last_word(s)
-	return s:gmatch("(%w+)$")()
+	return s:gmatch('(%w+)$')()
 end
 
 -- Removes last word of a string
 function M.remove_last_word(s, number)
 	number = number or 1
 	for i=1, number, 1 do
-		if s:find(" ") then
-			s = string.match(s, "(.-)%s(%S+)$")
+		if s:find(' ') then
+			s = string.match(s, '(.-)%s(%S+)$')
 		else
-			s = ""
+			s = ''
 		end
 	end
 	return s
@@ -236,7 +236,7 @@ end
 
 -- Validates an e-mail address
 function M.validate_email_address(s)
-	if (s:match("[A-Za-z0-9%.%%%+%-]+@[A-Za-z0-9%.%%%+%-]+%.%w%w%w?%w?")) then
+	if (s:match('[A-Za-z0-9%.%%%+%-]+@[A-Za-z0-9%.%%%+%-]+%.%w%w%w?%w?')) then
 		return true
 	else
 		return false
@@ -253,5 +253,83 @@ function M.is_numeric(s)
 	return tonumber(s) and true or false
 end
 
+-- Removes any final newline character or space
+function M.remove_final_newline(s)
+	return M.trim_right(s)
+end
+
+-- Returns ordinal suffix (1st 2nd 3rd 4th) for a number
+function M.ordinal_suffix(number)
+	number = math.abs(number) % 100
+	local d = number % 10
+	if d == 1 and number ~= 11 then return 'st'
+	elseif d == 2 and number ~= 12 then return 'nd'
+	elseif d == 3 and number ~= 13 then return 'rd'
+	else return 'th' end
+end
+
+-- Returns a string which is a concatenated number of copies of a string
+function M.duplicate(s, number)
+	local concatenation = ""
+	for i=1,number, 1 do
+		concatenation = concatenation .. s
+	end
+	return concatenation
+end
+
+-- Wraps a string to a table of strings without cutting off words
+function M.wrap_to_table(s, limit)
+	limit = limit or 72
+	local here = 1
+	local buffer = ""
+	local t = {}
+	s:gsub("(%s*)()(%S+)()",
+	function(sp, st, word, fi)
+		if fi-here > limit then
+			here = st
+			table.insert(t, buffer)
+			buffer = word
+		else
+			buffer = buffer..sp..word
+		end
+	end)
+	if(buffer ~= "") then
+		table.insert(t, buffer)
+	end
+	return (t)	
+end
+
+-- Wraps a string to a character limit width paragraph
+function M.wrap(s, limit)
+	return table.concat(M.wrap_to_table(s, limit), "\n")
+end
+
+-- Shortens a string to a max length and adds a tail if you want (such as ...)
+-- set reversed to true to start from line end to left
+function M.shorten(s,length,tail,reversed)
+	tail = tail or "..."
+	if length < #tail then return tail:sub(1,w) end
+	if #s > length then
+		if reversed then
+			local i = #s - length + 1 + #tail
+			return tail .. s:sub(i)
+		else
+			return s:sub(1,length-#tail) .. tail
+		end
+	end
+	return s
+end
+
+-- Removes line breaks
+function M.remove_line_breaks(s)
+	s, _ = string.gsub(s, "\n", " ")
+	return s
+end
+
+-- Removes all tabs
+function M.remove_tabs(s)
+	s, _ = string.gsub(s, "\t", "")
+	return s
+end
 
 return M

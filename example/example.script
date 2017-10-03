@@ -9,18 +9,22 @@ http://www.lua.org/manual/5.1/manual.html#5.4
 
 function init(self)
 	test_string_1 = "The quick brown fox jumps over the lazy dog"
-	test_string_2 = [[
-	O that this too too solid flesh would melt,
-	Thaw, and resolve itself into a dew!
-	Or that the Everlasting had not fix'd 
-	His canon 'gainst self-slaughter! O God! God!
-	How weary, stale, flat, and unprofitable
-	Seem to me all the uses of this world!
-		]] -- do not worry if the above does not style properly in editor
+	test_string_2 = 
+[[O that this too too solid flesh would melt,
+Thaw, and resolve itself into a dew!
+Or that the Everlasting had not fix'd 
+His canon 'gainst self-slaughter! O God! God!
+How weary, stale, flat, and unprofitable
+Seem to me all the uses of this world!]] -- do not worry if the above does not style properly in editor
 	test_string_3 = "       Text with  whitespace       before  and after.      "
 	test_string_4 = "doki dOKi kokoro"
 	test_string_5 = "doo dee doo doo doop dee doooo"
 	test_string_6 = "[[VERIFY]]"
+	test_string_7 = [[ Hello, my
+		good sir
+
+		]]
+	test_string_8 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultricies dapibus augue, in rutrum est sollicitudin non. Curabitur porta risus sed cursus scelerisque. Vivamus aliquam enim eget nunc blandit, non vulputate nisi lacinia. Aliquam hendrerit leo commodo nisl dapibus molestie. Praesent dictum lorem tellus, finibus dignissim sapien dictum et. Nullam vitae arcu eu orci commodo posuere sed in lorem. Integer finibus justo in malesuada blandit. Aliquam varius urna ac justo laoreet pulvinar. Sed placerat augue vel vehicula vehicula. Quisque scelerisque volutpat eros, at mollis nisi. Praesent a felis ut erat ultrices suscipit. Donec luctus odio suscipit lacus aliquet, fringilla elementum nunc accumsan. Curabitur id sodales mauris. Integer orci dolor, euismod at tortor ut, ultricies maximus velit. Maecenas velit est, ornare sed vulputate at, euismod et justo."
 
 	pprint(test_string_1)
 	pprint(test_string_2)
@@ -85,6 +89,23 @@ function init(self)
 	print(defstring.is_numeric("777"))
 	print(defstring.is_numeric("hello777"))	
 	
+	pprint(test_string_7)
+	pprint(defstring.remove_final_newline(test_string_7))
+	
+	print("1" .. defstring.ordinal_suffix(1))
+	print("2" .. defstring.ordinal_suffix(2))
+	print("3" .. defstring.ordinal_suffix(3))
+	print("7814845" .. defstring.ordinal_suffix(7814845))
+	
+	print(defstring.shorten(test_string_8,20,"...",false))
+	print(defstring.shorten(test_string_8,20,"...",true))
+	pprint(defstring.wrap(test_string_8,66))
+	print(defstring.duplicate("echo",10))
+	
+	print(defstring.remove_line_breaks(test_string_2))
+	print(defstring.wrap(defstring.remove_line_breaks(test_string_2)))
+	
+	print(defstring.remove_line_breaks(defstring.remove_tabs(test_string_7)))
 end
 
 
