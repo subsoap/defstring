@@ -1,0 +1,12 @@
+local defstring = require("defstring.defstring")
+
+function init(self)
+
+
+	
+end
+
+
+function update(self, dt)
+
+end
