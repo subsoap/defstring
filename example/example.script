@@ -2,7 +2,7 @@ local defstring = require("defstring.defstring")
 
 --[[
 
-This does not (currently at least) wrap any built in Lua string functions
+This some built in Lua string functions but not all
 http://www.lua.org/manual/5.1/manual.html#5.4
 
 --]]
@@ -19,6 +19,8 @@ function init(self)
 		]] -- do not worry if the above does not style properly in editor
 	test_string_3 = "       Text with  whitespace       before  and after.      "
 	test_string_4 = "doki dOKi kokoro"
+	test_string_5 = "doo dee doo doo doop dee doooo"
+	test_string_6 = "[[VERIFY]]"
 
 	pprint(test_string_1)
 	pprint(test_string_2)
@@ -30,8 +32,58 @@ function init(self)
 	pprint("[" .. defstring.trim_extraspace(test_string_3) .. "]")
 	
 	pprint(defstring.capitalize(test_string_4))
+	pprint(defstring.capitalize_every_word(test_string_4))
 	pprint(defstring.split(test_string_1," "))
 	pprint(defstring.join(defstring.split(test_string_1," "), " "))
+	
+	pprint(defstring.contains(test_string_1,"fox"))
+	pprint(defstring.contains(test_string_1,"qwerty"))
+	
+	local fish = defstring.iterator("fish")
+	for i=1, #"fish", 1 do
+		pprint(fish())
+	end
+	pprint(defstring.strip(test_string_1,"foxy"))
+	pprint(defstring.pad_zero("24",6))
+	pprint(defstring.count(test_string_5,"doo"))
+	pprint(defstring.count(test_string_5,"d"))
+	pprint(defstring.count(test_string_5,"o"))
+	pprint(defstring.count(test_string_5,"e"))
+	
+	pprint(defstring.is_beginning(test_string_1,"The"))
+	pprint(defstring.is_beginning(test_string_1,"the"))
+	pprint(defstring.is_ending(test_string_1,"dog"))
+	pprint(defstring.is_ending(test_string_1,"doggo"))
+	
+	pprint(test_string_6)
+	pprint(defstring.is_contained(test_string_6,"[[","]]"))
+	pprint(defstring.replace(test_string_1,"fox","human"))
+	pprint("$" .. defstring.comma(10000000))
+	
+	pprint("\\")
+	pprint(defstring.make_javascript_safe("\\"))
+	
+	pprint(defstring.get_from_left(test_string_1,11))
+	pprint(defstring.get_from_right(test_string_1,11))
+	pprint(defstring.get_char(test_string_1,1))
+	pprint(defstring.set_char(test_string_1,1,"HELLO"))
+	
+	pprint(defstring.insert_into(test_string_1,1,"HELLO"))
+	
+	pprint(defstring.remove_last_word(test_string_1))
+	pprint(defstring.remove_last_word(test_string_1, 6))
+	
+	pprint(defstring.get_first_word(test_string_1))
+	pprint(defstring.get_last_word(test_string_1))
+	
+	pprint(defstring.validate_email_address("hello@world.io"))
+	pprint(defstring.validate_email_address("not_an_email@@@"))
+	
+	print(defstring.is_alphabetic("hello"))
+	print(defstring.is_alphabetic("hello777"))
+	
+	print(defstring.is_numeric("777"))
+	print(defstring.is_numeric("hello777"))	
 	
 end
 
