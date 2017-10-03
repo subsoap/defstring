@@ -270,7 +270,7 @@ end
 
 -- Returns a string which is a concatenated number of copies of a string
 function M.duplicate(s, number)
-	local concatenation = ""
+	local concatenation = ''
 	for i=1,number, 1 do
 		concatenation = concatenation .. s
 	end
@@ -281,9 +281,9 @@ end
 function M.wrap_to_table(s, limit)
 	limit = limit or 72
 	local here = 1
-	local buffer = ""
+	local buffer = ''
 	local t = {}
-	s:gsub("(%s*)()(%S+)()",
+	s:gsub('(%s*)()(%S+)()',
 	function(sp, st, word, fi)
 		if fi-here > limit then
 			here = st
@@ -293,7 +293,7 @@ function M.wrap_to_table(s, limit)
 			buffer = buffer..sp..word
 		end
 	end)
-	if(buffer ~= "") then
+	if(buffer ~= '') then
 		table.insert(t, buffer)
 	end
 	return (t)	
@@ -301,13 +301,13 @@ end
 
 -- Wraps a string to a character limit width paragraph
 function M.wrap(s, limit)
-	return table.concat(M.wrap_to_table(s, limit), "\n")
+	return table.concat(M.wrap_to_table(s, limit), '\n')
 end
 
 -- Shortens a string to a max length and adds a tail if you want (such as ...)
 -- set reversed to true to start from line end to left
 function M.shorten(s,length,tail,reversed)
-	tail = tail or "..."
+	tail = tail or '...'
 	if length < #tail then return tail:sub(1,w) end
 	if #s > length then
 		if reversed then
@@ -322,13 +322,13 @@ end
 
 -- Removes line breaks
 function M.remove_line_breaks(s)
-	s, _ = string.gsub(s, "\n", " ")
+	s, _ = string.gsub(s, '\n', ' ')
 	return s
 end
 
 -- Removes all tabs
 function M.remove_tabs(s)
-	s, _ = string.gsub(s, "\t", "")
+	s, _ = string.gsub(s, '\t', '')
 	return s
 end
 
