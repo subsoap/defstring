@@ -332,4 +332,25 @@ function M.remove_tabs(s)
 	return s
 end
 
+-- Executes arbitrary Lua code based on a string (can be dangerous!!)
+-- useful for executing scripts based on loaded level data
+-- if you have user levels you don't want to allow this without good filters
+-- todo write a filter for this to optionally remove dangerous os functions?
+-- or to whitelist certain list of functions only
+function M.eval(s)
+	return assert((loadstring or load)(s))()
+end
+
+-- Replace a table of variables within a string
+-- s = "Hello, {player_name}!"
+-- variable_list = {player_name = "Defold Master"}
+function M.replace_variables(s, variable_list)
+	if not variable_list then return s end
+	local f = function(x)
+		return tostring(variable_list[x] or variable_list[tonumber(x)] or "{" .. x .. "}")
+	end
+	return (s:gsub("{(.-)}", f))
+end
+
+
 return M

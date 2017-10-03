@@ -106,6 +106,9 @@ Seem to me all the uses of this world!]] -- do not worry if the above does not s
 	print(defstring.wrap(defstring.remove_line_breaks(test_string_2)))
 	
 	print(defstring.remove_line_breaks(defstring.remove_tabs(test_string_7)))
+	defstring.eval('print(42)') -- don't use this without extreme care
+	print(defstring.replace_variables("Hello, {player_name}! Ah, I see you brought {current_companion} with you!",{player_name = "Defold Master", current_companion = "Dr. Horsey"}))
+	
 end
 
 
