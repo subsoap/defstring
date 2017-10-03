@@ -352,5 +352,23 @@ function M.replace_variables(s, variable_list)
 	return (s:gsub("{(.-)}", f))
 end
 
+-- Keeps all chars but those on the blacklist
+function M.blacklist(s, blacklist, escapeflag)
+	if escapeflag then
+		return (s:gsub('['..M.escape(blacklist)..']', ''))
+	else
+		return (s:gsub('['..blacklist..']', ''))
+	end
+end
+
+-- Removes all chars but those on the whitelist
+function M.whitelist(s, whitelist, escapeflag)
+	if escapeflag then
+		return (s:gsub('[^'..M.escape(whitelist)..']', ''))
+	else
+		return (s:gsub('[^'..whitelist..']', ''))
+	end
+end
+
 
 return M

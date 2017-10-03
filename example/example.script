@@ -25,6 +25,7 @@ Seem to me all the uses of this world!]] -- do not worry if the above does not s
 
 		]]
 	test_string_8 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultricies dapibus augue, in rutrum est sollicitudin non. Curabitur porta risus sed cursus scelerisque. Vivamus aliquam enim eget nunc blandit, non vulputate nisi lacinia. Aliquam hendrerit leo commodo nisl dapibus molestie. Praesent dictum lorem tellus, finibus dignissim sapien dictum et. Nullam vitae arcu eu orci commodo posuere sed in lorem. Integer finibus justo in malesuada blandit. Aliquam varius urna ac justo laoreet pulvinar. Sed placerat augue vel vehicula vehicula. Quisque scelerisque volutpat eros, at mollis nisi. Praesent a felis ut erat ultrices suscipit. Donec luctus odio suscipit lacus aliquet, fringilla elementum nunc accumsan. Curabitur id sodales mauris. Integer orci dolor, euismod at tortor ut, ultricies maximus velit. Maecenas velit est, ornare sed vulputate at, euismod et justo."
+	test_string_9 = "KRES-EX07-M3NW-28HL"
 
 	pprint(test_string_1)
 	pprint(test_string_2)
@@ -108,6 +109,19 @@ Seem to me all the uses of this world!]] -- do not worry if the above does not s
 	print(defstring.remove_line_breaks(defstring.remove_tabs(test_string_7)))
 	defstring.eval('print(42)') -- don't use this without extreme care
 	print(defstring.replace_variables("Hello, {player_name}! Ah, I see you brought {current_companion} with you!",{player_name = "Defold Master", current_companion = "Dr. Horsey"}))
+	
+	print(test_string_9)
+	print(defstring.whitelist(test_string_9,"0M2KE-", true)) -- escapeflag true escapses all characters listed so they are filtered directly
+	print(defstring.blacklist(test_string_9,"0M2KE-", true))
+	print(defstring.whitelist(test_string_9,"%a")) -- whitelist only letters (case doesn't matter)
+	print(defstring.whitelist(test_string_9,"%d")) -- whitelist only numbers
+	-- abc ---> matches a, b or c
+	-- a-z ---> matches lowercase letters (same as %l)
+	-- ^abc ---> matches anything except a, b or c
+	-- %a%d ---> matches all letters and digits
+	-- %a%d_ ---> matches all letters, digits and underscore
+	-- %[%] ---> matches square brackets (had to escape them with %)	
+	
 	
 end
 
