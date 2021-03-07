@@ -45,6 +45,18 @@ function M.split(s,delimiter)
 	return t
 end
 
+-- This version of split will include empty values (useful for parsing CSV files with empty cells properly)
+function M.split_include_empty(s,delimiter)
+	delimiter = delimiter or '%s'
+	local t={}
+	local i=1
+	for str in string.gmatch(s .. delimiter, '([^' .. delimiter .. ']*)' .. delimiter) do
+		t[i] = str
+		i = i + 1
+	end
+	return t
+end
+
 -- Joins a table into a single string seperated by a delimiter
 function M.join(t,delimiter)
 	delimiter = delimiter or ' '
